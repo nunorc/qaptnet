@@ -1,2 +1,4 @@
 torch
 pytorch_transformers
+flask
+flask-cors

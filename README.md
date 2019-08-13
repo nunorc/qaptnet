@@ -89,3 +89,32 @@ question = 'Em que ano nasceu o arquivo?'
 >>> ptnet.query(context=context, question=question)
 '1931'
 ```
+
+## Using the qaptnet API
+
+`qaptnet-api.py` provides a simple interface to the model via HTTP. Once all the
+requirements are met you can run it by simply executing:
+
+    $ python qaptnet-api
+
+The API is available on port `http://localhost:7788`, we can query the model via HTTP, for example
+using  `curl`:
+
+    $ cat data.json
+    {"context": "Arquitetonicamente, a escola tem um caráter católico. (...), "question": "A quem
+    a Virgem Maria supostamente apareceu em 1858 em Lourdes, na França?"}
+    $ curl -H "Content-Type: application/json" \
+           --data @data.json \
+           http://localhost:7788/query
+    {"answer":"Santa Bernadette Soubirous"}
+
+A Docker file is also available, to build the Docker image run:
+
+    $ docker build -t qaptnet-api:latest .
+
+And run the container:
+
+    $ docker run -d --rm -p 7788:7788 qaptnet-api
+
+Again, the API is available in `http://localhost:7788`, and the same method illustrated before
+can be used to query the model.
